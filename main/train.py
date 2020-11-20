@@ -200,14 +200,6 @@ def train():
         sum1 = 0
         val_loss_sum = 0
         val_top1_sum = 0
-        preds = []
-        roc_score_it, roc_true_it = [], []
-        roc_score = []
-        roc_true = []
-        labels_total_one_hot = np.array([]).reshape((0, 5))
-        outputs_preds = np.array([]).reshape((0, 5))
-        labels_total = np.array([])
-        outputs_total = np.array([])
         model.eval()
         with torch.no_grad():
             for im, (ims, labels) in enumerate(dataloader_val):
@@ -223,19 +215,6 @@ def train():
                     target = target - 1
 
                 output = model(input)
-                _, pred = output.max(1)
-                pred = pred.cpu()
-                for idx in pred.numpy():
-                    preds.append(idx)
-                roc_score_it.extend(np.array(output.data.cpu()).reshape(-1))
-                roc_true_it.extend(np.array(target.cpu()).reshape(-1))
-                roc_score.append(roc_score_it)
-                roc_true.append(roc_true_it)
-                top1 = accuracy(output.data, target.data, topk=(1,))
-                val_top1_sum += top1[0].cpu().numpy()
-                sum1 += 1
-                outputs_preds = np.concatenate((outputs_preds, output.cpu().numpy()))
-
 if __name__ == '__main__':
     if not os.path.isdir(OutpuDir):
         mkdir_p(OutpuDir)
