@@ -185,8 +185,7 @@ def opcounter(model):
 def split_data(X, Y, test_size=0.7, val_size=0.7):
   x_train, x_unlabel, y_train, y_unlabel = train_test_split(X, Y, test_size=test_size, random_state=42)
   x_val, x_unlabel, y_val, y_unlabel = train_test_split(x_unlabel, y_unlabel, test_size=val_size, random_state=42)
-  x_unlabel_weak, x_unlabel_strong, y_unlabel_weak, y_unlabel_strong = train_test_split(x_unlabel, y_unlabel, test_size=0.5, random_state=42)
-  return x_train, x_val, x_unlabel_weak, x_unlabel_strong, y_train, y_val, y_unlabel_weak, y_unlabel_strong
+  return x_train, x_val, x_unlabel, x_unlabel, y_train, y_val, y_unlabel, y_unlabel
 
 
 
